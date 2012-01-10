@@ -1,0 +1,19 @@
+{
+  "name": "email_post",
+  "description": "Emails a POST body to you (useful for testing 3rd party callbacks)",
+  "version": "0.0.1",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrewlin12/email_post.git"
+  },
+  "dependencies": {
+    "emailjs": "0.2.1",
+  },
+  "engines": {
+    "node": ">=0.6",
+    "npm": ">=1.0.106"
+  },
+  "author": "andrewlin12",
+  "main": "email_post"
+}
