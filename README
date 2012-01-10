@@ -1,0 +1,9 @@
+Usage
+-----
+EP_USERNAME=you@gmail.com EP_PASSWORD=your_gmail_password EP_PORT=optional node ep.js
+
+Default port is 3001
+
+Try It
+------
+curl -d "Some POST data" http://localhost:3001
