@@ -1,5 +1,7 @@
 var email = require('emailjs');
 var http = require('http');
+var querystring = require('querystring');
+var url = require('url');
 
 var username = process.env.EP_USERNAME;
 var password = process.env.EP_PASSWORD;
@@ -19,6 +21,14 @@ http.createServer(function(req, res) {
     });
 
     req.on('end', function() {
+        if (req.url.indexOf('/set_dest') === 0) {
+            var urlParts = url.parse(req.url).query;
+            destinationEmail = querystring.parse(urlParts)["email"]
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.end('Set to ' + destinationEmail);
+            return;
+        }
+
         var server = email.server.connect({
             user: username,
             password: password,
@@ -33,18 +43,19 @@ http.createServer(function(req, res) {
             subject: "A POST for you"
         }, function(err, message) {
             if (err) {
-                console.log(arguments);
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end(JSON.stringify(arguments));
                 return;
             }
             console.log("Sent!!");
-        });
+
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.end('OK\n');
+         });
         console.log("Received a request");
         console.log(data);
         console.log("Sending to " + destinationEmail + "...");
-
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end('OK\n');
-    });
+   });
 
 }).listen(port, '0.0.0.0');
 console.log('Listening on port ' + port + '...');
